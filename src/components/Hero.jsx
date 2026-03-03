@@ -111,7 +111,8 @@ export default function Hero() {
             <div className="relative hidden lg:block animate-fade-in animation-delay-400 py-8">
               <div className="relative ml-8">
                 {/* Imagen principal */}
-                <div className="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl shadow-black/40 rotate-1 hover:rotate-0 transition-transform duration-700 group">
+                <div className="relative z-10 rounded-[2rem] shadow-2xl shadow-black/40 rotate-1 hover:rotate-0 transition-transform duration-700 group">
+                <div className="rounded-[2rem] overflow-hidden">
                   <img
                     src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=700&fit=crop&q=80"
                     alt="Torta de chocolate premium"
@@ -128,6 +129,7 @@ export default function Hero() {
                       <p className="text-white/70 text-xs mt-0.5">Chocolate belga con ganache artesanal</p>
                     </div>
                   </div>
+                </div>
                 </div>
 
                 {/* Imagen secundaria - esquina inferior izquierda */}
