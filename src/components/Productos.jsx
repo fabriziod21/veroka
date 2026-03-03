@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ShoppingBag, Star, Heart } from 'lucide-react'
 import Card3D from './Card3D'
+import { useParallax } from '../hooks/useParallax'
 
 const categorias = ['Todos', 'Tortas', 'Cupcakes', 'Postres', 'Panes']
 
@@ -90,14 +91,35 @@ const productos = [
 export default function Productos() {
   const [categoriaActiva, setCategoriaActiva] = useState('Todos')
   const [likes, setLikes] = useState({})
+  const { ref: decoRef, offset: decoOffset } = useParallax(0.12)
 
   const productosFiltrados = categoriaActiva === 'Todos'
     ? productos
     : productos.filter(p => p.categoria === categoriaActiva)
 
   return (
-    <section id="productos" aria-label="Nuestros productos" className="py-16 sm:py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="productos" aria-label="Nuestros productos" className="relative py-16 sm:py-24 bg-gray-50 overflow-hidden">
+      {/* Decorative parallax shapes */}
+      <div ref={decoRef} className="absolute inset-0 pointer-events-none hidden md:block" aria-hidden="true">
+        <div
+          className="absolute -top-20 -right-20 w-80 h-80 bg-pink-200/20 rounded-full blur-3xl will-change-transform"
+          style={{ transform: `translateY(${decoOffset * 1.5}px)` }}
+        />
+        <div
+          className="absolute -bottom-32 -left-20 w-96 h-96 bg-rose-100/30 rounded-full blur-3xl will-change-transform"
+          style={{ transform: `translateY(${decoOffset * -1.2}px)` }}
+        />
+        <div
+          className="absolute top-1/3 right-[5%] w-24 h-24 border-2 border-pink-200/30 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * 2}px) rotate(${decoOffset * 0.3}deg)` }}
+        />
+        <div
+          className="absolute bottom-1/4 left-[8%] w-16 h-16 border border-rose-200/20 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * -1.8}px)` }}
+        />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           <span className="text-pink-600 font-semibold text-xs sm:text-sm tracking-wider uppercase">Nuestro Menu</span>

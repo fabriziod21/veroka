@@ -4,6 +4,8 @@ import Hero from './components/Hero'
 import WhatsAppButton from './components/WhatsAppButton'
 
 const Productos = lazy(() => import('./components/Productos'))
+const Catalogo = lazy(() => import('./components/Catalogo'))
+const PedidoPersonalizado = lazy(() => import('./components/PedidoPersonalizado'))
 const Nosotros = lazy(() => import('./components/Nosotros'))
 const Testimonios = lazy(() => import('./components/Testimonios'))
 const Contacto = lazy(() => import('./components/Contacto'))
@@ -20,6 +22,8 @@ function App() {
         <Hero />
         <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-3 border-pink-600 border-t-transparent rounded-full animate-spin" /></div>}>
           <Productos />
+          <Catalogo />
+          <PedidoPersonalizado />
           <Nosotros />
           <Testimonios />
           <Contacto />

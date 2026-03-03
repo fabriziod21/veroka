@@ -20,8 +20,9 @@ export default function Navbar() {
   const links = [
     { name: 'Inicio', href: '#inicio' },
     { name: 'Productos', href: '#productos' },
+    { name: 'Catalogo', href: '#catalogo' },
+    { name: 'Pedido', href: '#pedido-personalizado' },
     { name: 'Nosotros', href: '#nosotros' },
-    { name: 'Testimonios', href: '#testimonios' },
     { name: 'Contacto', href: '#contacto' },
   ]
 

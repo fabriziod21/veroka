@@ -1,10 +1,19 @@
 import { ArrowDown, Sparkles, Star, Clock, Truck } from 'lucide-react'
+import { useParallax, useMouseParallax } from '../hooks/useParallax'
 
 export default function Hero() {
+  const { ref: sectionRef, offset: bgOffset } = useParallax(0.3)
+  const { ref: blobRef, offset: blobOffset } = useParallax(0.15)
+  const { ref: contentRef, offset: contentOffset } = useParallax(-0.05)
+  const { x: mouseX, y: mouseY } = useMouseParallax(15)
+
   return (
-    <section id="inicio" aria-label="Bienvenida" className="relative min-h-screen overflow-hidden">
-      {/* Background image con overlay */}
-      <div className="absolute inset-0">
+    <section id="inicio" aria-label="Bienvenida" ref={sectionRef} className="relative min-h-screen overflow-hidden">
+      {/* Background image con parallax */}
+      <div
+        className="absolute inset-0 will-change-transform"
+        style={{ transform: `translateY(${bgOffset * 0.5}px) scale(1.1)` }}
+      >
         <img
           src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=1920&h=1080&fit=crop&q=80"
           alt=""
@@ -15,9 +24,16 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
       </div>
 
-      {/* Formas decorativas */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-pink-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-rose-500/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4" />
+      {/* Formas decorativas con parallax */}
+      <div
+        ref={blobRef}
+        className="absolute top-0 right-0 w-[600px] h-[600px] bg-pink-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 will-change-transform"
+        style={{ transform: `translate(33%, -50%) translateY(${blobOffset * 0.8}px) translateX(${mouseX * 0.5}px)` }}
+      />
+      <div
+        className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-rose-500/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 will-change-transform"
+        style={{ transform: `translate(-25%, 33%) translateY(${blobOffset * -0.6}px) translateX(${mouseX * -0.3}px)` }}
+      />
 
       {/* Linea decorativa diagonal */}
       <div className="absolute inset-0 hidden lg:block" aria-hidden="true">
@@ -32,8 +48,36 @@ export default function Hero() {
         </svg>
       </div>
 
-      {/* Main content */}
-      <div className="relative z-10 min-h-screen flex items-center">
+      {/* Floating parallax particles */}
+      <div className="absolute inset-0 pointer-events-none hidden md:block" aria-hidden="true">
+        <div
+          className="absolute top-[15%] left-[10%] w-3 h-3 bg-pink-400/30 rounded-full blur-[1px] will-change-transform"
+          style={{ transform: `translate(${mouseX * 1.2}px, ${mouseY * 1.2}px)` }}
+        />
+        <div
+          className="absolute top-[25%] right-[15%] w-2 h-2 bg-rose-300/40 rounded-full blur-[1px] will-change-transform"
+          style={{ transform: `translate(${mouseX * -0.8}px, ${mouseY * -0.8}px)` }}
+        />
+        <div
+          className="absolute bottom-[30%] left-[20%] w-4 h-4 bg-amber-300/20 rounded-full blur-[2px] will-change-transform"
+          style={{ transform: `translate(${mouseX * 0.6}px, ${mouseY * 0.6}px)` }}
+        />
+        <div
+          className="absolute top-[60%] right-[25%] w-2.5 h-2.5 bg-pink-300/25 rounded-full blur-[1px] will-change-transform"
+          style={{ transform: `translate(${mouseX * -1.5}px, ${mouseY * -1.5}px)` }}
+        />
+        <div
+          className="absolute top-[40%] left-[45%] w-1.5 h-1.5 bg-white/20 rounded-full will-change-transform"
+          style={{ transform: `translate(${mouseX * 2}px, ${mouseY * 2}px)` }}
+        />
+      </div>
+
+      {/* Main content con subtle parallax */}
+      <div
+        ref={contentRef}
+        className="relative z-10 min-h-screen flex items-center will-change-transform"
+        style={{ transform: `translateY(${contentOffset * 0.3}px)` }}
+      >
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:py-0">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
@@ -111,7 +155,10 @@ export default function Hero() {
             <div className="relative hidden lg:block animate-fade-in animation-delay-400 py-8">
               <div className="relative ml-8">
                 {/* Imagen principal */}
-                <div className="relative z-10 rounded-[2rem] shadow-2xl shadow-black/40 rotate-1 hover:rotate-0 transition-transform duration-700 group">
+                <div
+                  className="relative z-10 rounded-[2rem] shadow-2xl shadow-black/40 rotate-1 hover:rotate-0 transition-transform duration-700 group will-change-transform"
+                  style={{ transform: `rotate(1deg) translate(${mouseX * 0.15}px, ${mouseY * 0.15}px)` }}
+                >
                 <div className="rounded-[2rem] overflow-hidden">
                   <img
                     src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=700&fit=crop&q=80"
@@ -132,8 +179,11 @@ export default function Hero() {
                 </div>
                 </div>
 
-                {/* Imagen secundaria - esquina inferior izquierda */}
-                <div className="absolute -bottom-4 -left-16 z-20 rounded-2xl overflow-hidden shadow-2xl shadow-black/30 -rotate-3 hover:rotate-0 transition-transform duration-700 animate-float group">
+                {/* Imagen secundaria - esquina inferior izquierda con mouse parallax */}
+                <div
+                  className="absolute -bottom-4 -left-16 z-20 rounded-2xl overflow-hidden shadow-2xl shadow-black/30 -rotate-3 hover:rotate-0 transition-transform duration-700 animate-float group will-change-transform"
+                  style={{ transform: `rotate(-3deg) translate(${mouseX * -0.3}px, ${mouseY * -0.3}px)` }}
+                >
                   <img
                     src="https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=300&h=300&fit=crop&q=75"
                     alt="Cupcakes artesanales"
@@ -144,8 +194,11 @@ export default function Hero() {
                   />
                 </div>
 
-                {/* Imagen terciaria - esquina superior izquierda */}
-                <div className="absolute -top-4 -left-10 z-0 rounded-2xl overflow-hidden shadow-xl shadow-black/20 rotate-3 hover:rotate-0 transition-transform duration-700 animation-delay-400 animate-float group">
+                {/* Imagen terciaria - esquina superior izquierda con mouse parallax */}
+                <div
+                  className="absolute -top-4 -left-10 z-0 rounded-2xl overflow-hidden shadow-xl shadow-black/20 rotate-3 hover:rotate-0 transition-transform duration-700 animation-delay-400 animate-float group will-change-transform"
+                  style={{ transform: `rotate(3deg) translate(${mouseX * 0.4}px, ${mouseY * 0.4}px)` }}
+                >
                   <img
                     src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=250&h=250&fit=crop&q=75"
                     alt="Pastel decorado"
@@ -156,8 +209,11 @@ export default function Hero() {
                   />
                 </div>
 
-                {/* Badge de rating */}
-                <div className="absolute top-6 right-4 z-30 bg-white rounded-2xl p-3 shadow-xl shadow-black/10 animate-float animation-delay-200">
+                {/* Badge de rating con mouse parallax */}
+                <div
+                  className="absolute top-6 right-4 z-30 bg-white rounded-2xl p-3 shadow-xl shadow-black/10 animate-float animation-delay-200 will-change-transform"
+                  style={{ transform: `translate(${mouseX * -0.4}px, ${mouseY * -0.4}px)` }}
+                >
                   <div className="flex items-center gap-2">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
@@ -169,8 +225,11 @@ export default function Hero() {
                   <p className="text-gray-500 text-xs mt-0.5">+5,000 clientes felices</p>
                 </div>
 
-                {/* Badge de variedades */}
-                <div className="absolute bottom-12 right-4 z-30 bg-gradient-to-r from-pink-600 to-rose-500 text-white rounded-xl px-4 py-3 shadow-lg shadow-pink-600/30 animate-float animation-delay-600">
+                {/* Badge de variedades con mouse parallax */}
+                <div
+                  className="absolute bottom-12 right-4 z-30 bg-gradient-to-r from-pink-600 to-rose-500 text-white rounded-xl px-4 py-3 shadow-lg shadow-pink-600/30 animate-float animation-delay-600 will-change-transform"
+                  style={{ transform: `translate(${mouseX * 0.5}px, ${mouseY * 0.5}px)` }}
+                >
                   <p className="font-bold text-lg leading-none">50+</p>
                   <p className="text-pink-200 text-xs mt-0.5">Variedades</p>
                 </div>

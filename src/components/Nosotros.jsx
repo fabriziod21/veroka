@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Award, Clock, Users, Leaf } from 'lucide-react'
+import { useParallax } from '../hooks/useParallax'
 
 const features = [
   {
@@ -76,18 +77,46 @@ function useInView(threshold = 0.2) {
 
 export default function Nosotros() {
   const [sectionRef, sectionInView] = useInView(0.1)
+  const { ref: parallaxRef, offset: imgOffset } = useParallax(0.1)
+  const { ref: decoRef, offset: decoOffset } = useParallax(0.15)
 
   return (
-    <section id="nosotros" aria-label="Sobre nosotros" className="py-16 sm:py-24 bg-white overflow-hidden">
-      <div ref={sectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="nosotros" aria-label="Sobre nosotros" className="relative py-16 sm:py-24 bg-white overflow-hidden">
+      {/* Parallax decorative elements */}
+      <div ref={decoRef} className="absolute inset-0 pointer-events-none hidden md:block" aria-hidden="true">
+        <div
+          className="absolute top-20 right-[10%] w-40 h-40 border-2 border-pink-100 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * 2.5}px) rotate(${decoOffset * 0.5}deg)` }}
+        />
+        <div
+          className="absolute bottom-20 left-[5%] w-28 h-28 border border-rose-100 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * -2}px)` }}
+        />
+        <div
+          className="absolute top-1/2 right-[3%] w-4 h-4 bg-pink-200/40 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * 3}px)` }}
+        />
+        <div
+          className="absolute top-[20%] left-[15%] w-3 h-3 bg-rose-200/30 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * -2.5}px)` }}
+        />
+      </div>
+
+      <div ref={sectionRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 items-center">
-          {/* Imagenes */}
-          <div className={`relative transition-all duration-1000 ${sectionInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+          {/* Imagenes con parallax */}
+          <div
+            ref={parallaxRef}
+            className={`relative transition-all duration-1000 ${sectionInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}
+          >
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <div className="space-y-3 sm:space-y-4">
-                <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
+                <div
+                  className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group will-change-transform"
+                  style={{ transform: `translateY(${imgOffset * 1.5}px)` }}
+                >
                   <img
-                    src="https://images.unsplash.com/photo-1486427944781-dbf45f471ae5?w=400&h=500&fit=crop&q=75"
+                    src="https://images.unsplash.com/photo-1607478900766-efe13248b125?w=400&h=500&fit=crop&q=75"
                     alt="Pastelera decorando un pastel artesanal"
                     loading="lazy"
                     decoding="async"
@@ -96,7 +125,10 @@ export default function Nosotros() {
                     className="w-full h-40 sm:h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
-                <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
+                <div
+                  className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group will-change-transform"
+                  style={{ transform: `translateY(${imgOffset * 0.8}px)` }}
+                >
                   <img
                     src="https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=400&h=300&fit=crop&q=75"
                     alt="Ingredientes frescos y naturales"
@@ -109,7 +141,10 @@ export default function Nosotros() {
                 </div>
               </div>
               <div className="space-y-3 sm:space-y-4 pt-6 sm:pt-8">
-                <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
+                <div
+                  className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group will-change-transform"
+                  style={{ transform: `translateY(${imgOffset * -1.2}px)` }}
+                >
                   <img
                     src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&h=300&fit=crop&q=75"
                     alt="Pastel terminado con decoracion elegante"
@@ -120,7 +155,10 @@ export default function Nosotros() {
                     className="w-full h-32 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
-                <div className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
+                <div
+                  className="rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group will-change-transform"
+                  style={{ transform: `translateY(${imgOffset * -0.6}px)` }}
+                >
                   <img
                     src="https://images.unsplash.com/photo-1587668178277-295251f900ce?w=400&h=500&fit=crop&q=75"
                     alt="Vitrina con variedad de pasteles"
@@ -135,7 +173,10 @@ export default function Nosotros() {
             </div>
 
             {/* Badge flotante con counter animado */}
-            <div className="absolute -bottom-4 sm:-bottom-6 -right-2 sm:-right-6 bg-pink-600 text-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl shadow-pink-600/25 animate-float">
+            <div
+              className="absolute -bottom-4 sm:-bottom-6 -right-2 sm:-right-6 bg-pink-600 text-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl shadow-pink-600/25 animate-float will-change-transform"
+              style={{ transform: `translateY(${imgOffset * -2}px)` }}
+            >
               <p className="font-playfair text-2xl sm:text-3xl font-bold">
                 <AnimatedCounter target={10} suffix="+" />
               </p>

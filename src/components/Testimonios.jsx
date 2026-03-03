@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useParallax } from '../hooks/useParallax'
 
 const testimonios = [
   {
@@ -29,6 +30,7 @@ export default function Testimonios() {
   const [active, setActive] = useState(0)
   const [inView, setInView] = useState(false)
   const sectionRef = useRef(null)
+  const { ref: decoRef, offset: decoOffset } = useParallax(0.12)
 
   // Auto-slide
   useEffect(() => {
@@ -47,8 +49,33 @@ export default function Testimonios() {
   }, [])
 
   return (
-    <section id="testimonios" aria-label="Testimonios de clientes" className="py-16 sm:py-24 bg-gradient-to-b from-pink-50 to-white">
-      <div ref={sectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="testimonios" aria-label="Testimonios de clientes" className="relative py-16 sm:py-24 bg-gradient-to-b from-pink-50 to-white overflow-hidden">
+      {/* Parallax decorative elements */}
+      <div ref={decoRef} className="absolute inset-0 pointer-events-none hidden md:block" aria-hidden="true">
+        <div
+          className="absolute top-10 left-[8%] w-32 h-32 border-2 border-pink-100/50 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * 2}px) rotate(${decoOffset * 0.4}deg)` }}
+        />
+        <div
+          className="absolute bottom-16 right-[12%] w-20 h-20 border border-rose-200/30 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * -1.8}px)` }}
+        />
+        <div
+          className="absolute top-1/3 right-[5%] w-5 h-5 bg-pink-300/20 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * 3}px)` }}
+        />
+        <div
+          className="absolute bottom-1/3 left-[3%] w-3 h-3 bg-amber-200/30 rounded-full will-change-transform"
+          style={{ transform: `translateY(${decoOffset * -2.5}px)` }}
+        />
+        {/* Large blurred shape */}
+        <div
+          className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-pink-100/30 rounded-full blur-3xl will-change-transform"
+          style={{ transform: `translateX(-50%) translateY(${decoOffset * 1}px)` }}
+        />
+      </div>
+
+      <div ref={sectionRef} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className={`text-center mb-10 sm:mb-16 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <span className="text-pink-600 font-semibold text-xs sm:text-sm tracking-wider uppercase">Testimonios</span>
