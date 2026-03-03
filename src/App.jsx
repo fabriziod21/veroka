@@ -1,37 +1,29 @@
 import { lazy, Suspense } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
 import WhatsAppButton from './components/WhatsAppButton'
 
-const Productos = lazy(() => import('./components/Productos'))
-const Catalogo = lazy(() => import('./components/Catalogo'))
-const PedidoPersonalizado = lazy(() => import('./components/PedidoPersonalizado'))
-const Nosotros = lazy(() => import('./components/Nosotros'))
-const Testimonios = lazy(() => import('./components/Testimonios'))
-const Contacto = lazy(() => import('./components/Contacto'))
-const Footer = lazy(() => import('./components/Footer'))
+const HomePage = lazy(() => import('./pages/HomePage'))
+const CatalogoPage = lazy(() => import('./pages/CatalogoPage'))
+
+const Spinner = () => (
+  <div className="h-96 flex items-center justify-center">
+    <div className="w-8 h-8 border-3 border-pink-600 border-t-transparent rounded-full animate-spin" />
+  </div>
+)
 
 function App() {
   return (
     <div className="min-h-screen">
-      <a href="#productos" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:bg-pink-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">
-        Saltar al contenido
-      </a>
       <Navbar />
       <main>
-        <Hero />
-        <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-3 border-pink-600 border-t-transparent rounded-full animate-spin" /></div>}>
-          <Productos />
-          <Catalogo />
-          <PedidoPersonalizado />
-          <Nosotros />
-          <Testimonios />
-          <Contacto />
+        <Suspense fallback={<Spinner />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/catalogo" element={<CatalogoPage />} />
+          </Routes>
         </Suspense>
       </main>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
       <WhatsAppButton />
     </div>
   )
